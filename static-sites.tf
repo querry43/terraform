@@ -1,28 +1,16 @@
-resource "aws_s3_bucket" "wrecked_underdogma_net" {
-  bucket = "wrecked.underdogma.net"
-  acl    = "public-read"
-
-  website = {
-    index_document = "index.html"
-  }
+module "wrecked_underdogma_net" {
+  source = "modules/s3_bucket_site"
+  name   = "wrecked.underdogma.net"
 }
 
-resource "aws_s3_bucket" "www_underdogma_net" {
-  bucket = "www.underdogma.net"
-  acl    = "public-read"
-
-  website = {
-    index_document = "index.html"
-  }
+module "www_underdogma_net" {
+  source = "modules/s3_bucket_site"
+  name   = "www.underdogma.net"
 }
 
-resource "aws_s3_bucket" "test_underdogma_net" {
-  bucket = "test.underdogma.net"
-  acl    = "public-read"
-
-  website = {
-    index_document = "index.html"
-  }
+module "test_underdogma_net" {
+  source = "modules/s3_bucket_site"
+  name   = "test.underdogma.net"
 }
 
 resource "aws_route53_record" "test_underdogma_net" {
@@ -31,8 +19,8 @@ resource "aws_route53_record" "test_underdogma_net" {
   type    = "A"
 
   alias {
-    name                   = "${aws_s3_bucket.test_underdogma_net.website_domain}"
-    zone_id                = "${aws_s3_bucket.test_underdogma_net.hosted_zone_id}"
+    name                   = "${module.test_underdogma_net.website_domain}"
+    zone_id                = "${module.test_underdogma_net.hosted_zone_id}"
     evaluate_target_health = false
   }
 }

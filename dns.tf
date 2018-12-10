@@ -24,14 +24,6 @@ module support_dns_records {
 
   recordsets = [
     {
-      name = ""
-      type = "A"
-      ttl = 300
-      records = [
-        "64.193.62.63"
-      ]
-    },
-    {
       name = "_domainkey"
       type = "A"
       ttl = 300

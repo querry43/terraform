@@ -12,7 +12,7 @@ provider aws {
 }
 
 module tf_state {
-  source     = "./modules/s3_bucket"
+  source     = "./modules/aws_s3_bucket"
   name       = "underdogma-tf-state"
   versioning = true
 }

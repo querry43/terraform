@@ -1,6 +1,8 @@
-resource aws_route53_record A_record {
+resource aws_route53_record A_records {
+  count = length(local.all_names)
+
   zone_id = var.zone.id
-  name    = var.name
+  name    = local.all_names[count.index]
   type    = "A"
 
   alias {
@@ -10,9 +12,11 @@ resource aws_route53_record A_record {
   }
 }
 
-resource aws_route53_record AAAA_record {
+resource aws_route53_record AAAA_records {
+  count = length(local.all_names)
+
   zone_id = var.zone.id
-  name    = var.name
+  name    = local.all_names[count.index]
   type    = "AAAA"
 
   alias {

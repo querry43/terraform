@@ -1,5 +1,5 @@
 resource aws_cloudfront_distribution distribution {
-  aliases = concat(list(local.domain_name), var.aliases)
+  aliases = concat(list(local.domain_name), local.aliases)
 
   origin {
     domain_name = aws_s3_bucket.bucket.bucket_regional_domain_name
@@ -36,6 +36,6 @@ resource aws_cloudfront_distribution distribution {
   price_class = var.price_class
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn = aws_acm_certificate.cert.arn
   }
 }

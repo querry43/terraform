@@ -10,7 +10,7 @@ module host_dns_records {
     {
       name = "v8"
       type = "A"
-      ttl = 300
+      ttl  = 300
       records = [
         "64.193.62.63"
       ]
@@ -26,7 +26,7 @@ module support_dns_records {
     {
       name = "_domainkey"
       type = "A"
-      ttl = 300
+      ttl  = 300
       records = [
         "64.193.62.63"
       ]

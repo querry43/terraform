@@ -1,0 +1,79 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": "",
+    "base_ami_name": "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*",
+    "base_ami_owner": "099720109477",
+    "instance_type": "t3.nano",
+    "region": "us-west-2"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "{{user `region`}}",
+
+    "source_ami_filter": {
+      "owners": ["{{user `base_ami_owner`}}"],
+      "most_recent": true,
+      "filters": {
+        "name": "{{user `base_ami_name`}}"
+      }
+    },
+    "instance_type": "{{user `instance_type`}}",
+    "ssh_username": "ubuntu",
+    "encrypt_boot": "true",
+
+    "ami_name": "underdogma.net {{timestamp}}",
+    "ami_description": "underdogma.net {{timestamp}}",
+    "tags": {
+      "Name": "underdogma.net {{timestamp}}",
+      "BaseImage": "{{user `base_ami_name`}}",
+      "CreatedAt": "{{timestamp}}"
+    }
+  }],
+  "Provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sleep 30"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo apt-get update",
+        "sudo apt-get upgrade -y",
+        "sudo apt-get install -y apt-file awscli bc finger gcc git letsencrypt lxc ntp openssh-server packer ruby-dev silversearcher-ag supervisor vim-nox vim-scripts",
+        "sudo apt-get install -y docker-compose docker.io vim-syntax-docker"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo gem install config_curator"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "curl https://releases.hashicorp.com/terraform/0.12.0-alpha4/terraform_0.12.0-alpha4_terraform_0.12.0-alpha4_linux_amd64.zip > /tmp/terraform.zip",
+        "sudo unzip -d /usr/local/bin /tmp/terraform.zip"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo useradd --create-home --groups docker,sudo --shell /bin/bash matt"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo su - -c 'cd ~matt && git clone https://github.com/querry43/dotfiles.git && cd dotfiles && curate' matt",
+        "sudo su - -c 'curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash' matt",
+        "sudo su - -c 'mkdir work' matt"
+      ]
+    }
+  ]
+}

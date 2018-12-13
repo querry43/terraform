@@ -2,22 +2,6 @@ resource aws_route53_zone zone {
   name = "underdogma.net"
 }
 
-module host_dns_records {
-  source  = "git@github.com:querry43/terraform-aws-route53-records.git"
-  zone    = aws_route53_zone.zone
-
-  recordsets = [
-    {
-      name = "v8"
-      type = "A"
-      ttl  = 300
-      records = [
-        "64.193.62.63"
-      ]
-    }
-  ]
-}
-
 module support_dns_records {
   source  = "git@github.com:querry43/terraform-aws-route53-records.git"
   zone    = aws_route53_zone.zone

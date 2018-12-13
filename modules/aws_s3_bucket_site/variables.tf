@@ -1,3 +1,7 @@
+provider aws {
+  alias = "us_east_1"
+}
+
 variable name {
   description = "name for the site, not including the tld"
 }

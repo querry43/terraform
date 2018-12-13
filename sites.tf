@@ -1,5 +1,5 @@
 module www_underdogma_net {
-  source  = "./modules/aws_s3_bucket_site"
+  source  = "git@github.com:querry43/terraform-aws-s3-bucket-site.git"
   name    = "www"
   aliases = [""]
   zone    = aws_route53_zone.zone
@@ -10,7 +10,7 @@ module www_underdogma_net {
 }
 
 module test_underdogma_net {
-  source = "./modules/aws_s3_bucket_site"
+  source = "git@github.com:querry43/terraform-aws-s3-bucket-site.git"
   name   = "test"
   zone   = aws_route53_zone.zone
 

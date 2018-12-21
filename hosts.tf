@@ -13,17 +13,19 @@ resource "aws_security_group" "v1" {
   vpc_id = aws_vpc.main.id
 
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   egress {
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    cidr_blocks     = ["0.0.0.0/0"]
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 }
 
@@ -59,11 +61,6 @@ users:
 EOF
 }
 
-resource "aws_eip" "v1" {
-  instance = "${aws_instance.v1.id}"
-  vpc      = true
-}
-
 module host_dns_records {
   source  = "git@github.com:querry43/terraform-aws-route53-records.git"
   zone    = aws_route53_zone.zone
@@ -72,8 +69,14 @@ module host_dns_records {
     {
       name = "v1"
       type = "A"
-      ttl  = 300
-      records = [ aws_eip.v1.public_ip ]
+      ttl  = 30
+      records = [ aws_instance.v1.public_ip ]
+    },
+    {
+      name = "v1"
+      type = "AAAA"
+      ttl  = 30
+      records = aws_instance.v1.ipv6_addresses
     },
     {
       name = "v8"

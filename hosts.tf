@@ -36,6 +36,11 @@ resource "aws_instance" "v1" {
     aws_security_group.v1.id
   ]
 
+  tags = {
+    Schedule = "daytime"
+  }
+
+
   user_data = <<EOF
 #cloud-config
 

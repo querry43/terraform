@@ -1,3 +1,7 @@
+variable v1_availability_zone {
+  default = "us-west-2b"
+}
+
 data "aws_ami" "ubuntu" {
   most_recent = true
 
@@ -34,9 +38,21 @@ resource "aws_eip" "v1" {
   vpc      = true
 }
 
+resource "aws_ebs_volume" "v1" {
+  type              = "gp2"
+  availability_zone = var.v1_availability_zone
+  size              = 10
+
+  tags = {
+    Name = "v1-work"
+  }
+}
+
 resource "aws_instance" "v1" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
+
+  availability_zone = var.v1_availability_zone
 
   subnet_id = aws_subnet.dmz.id
   vpc_security_group_ids = [
@@ -65,7 +81,16 @@ users:
     lock_passwd: false
     ssh_authorized_keys: 
     - ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAxnahRdhIq65Mep/6XDaYDpvjFUPwrYZoRqa0B2dtcI+BADxuQV+cmchdJau8gYZdbt066uO70rNfe+WsNXzmox5GVy56cka2XwPQVOQcrp08Qf9vWA96OStK3CfSFwqPY9oHl47yaKedAK7uS47aqjb+0r959RylK8Q8WlRfJw7FDjTWknjnqDOY/WA432d1ZvzJbQeVvAvN+7kLdFIGMUj2ZPVLyIX25xqawp7F7L/HYcrWhsDox/ttN/qcHE5kWhOzfb6ghFfstZ3sgj/MCCspMzQ1B943kWxWnrfe87Lbpl9MaIUnOicilcm+MymNj+DRqMfgE5LATx1ktLgFIw==
+
+mounts:
+ - [ /dev/nvme1n1, /home/matt/work ]
 EOF
+}
+
+resource "aws_volume_attachment" "v1_work" {
+  device_name = "/dev/sdf"
+  volume_id   = aws_ebs_volume.v1.id
+  instance_id = aws_instance.v1.id
 }
 
 module host_dns_records {

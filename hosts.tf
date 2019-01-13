@@ -43,11 +43,12 @@ resource "aws_instance" "v1" {
     aws_security_group.v1.id
   ]
 
+  iam_instance_profile = aws_iam_instance_profile.administrator_profile.name
+
   tags = {
     Name     = "v1.underdogma.net"
     Schedule = "daytime"
   }
-
 
   user_data = <<EOF
 #cloud-config

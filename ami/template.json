@@ -5,13 +5,15 @@
     "base_ami_name": "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*",
     "base_ami_owner": "099720109477",
     "instance_type": "t3.nano",
-    "region": "us-west-2"
+    "region": "us-west-2",
+    "subnet_id": "subnet-04f7183724562e90a"
   },
   "builders": [{
     "type": "amazon-ebs",
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "{{user `region`}}",
+    "subnet_id": "{{user `subnet_id`}}",
 
     "source_ami_filter": {
       "owners": ["{{user `base_ami_owner`}}"],

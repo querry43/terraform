@@ -29,6 +29,11 @@ resource "aws_security_group" "v1" {
   }
 }
 
+resource "aws_eip" "v1" {
+  instance = aws_instance.v1.id
+  vpc      = true
+}
+
 resource "aws_instance" "v1" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
@@ -39,6 +44,7 @@ resource "aws_instance" "v1" {
   ]
 
   tags = {
+    Name     = "v1.underdogma.net"
     Schedule = "daytime"
   }
 
@@ -70,7 +76,7 @@ module host_dns_records {
       name = "v1"
       type = "A"
       ttl  = 30
-      records = [ aws_instance.v1.public_ip ]
+      records = [ aws_eip.v1.public_ip ]
     },
     {
       name = "v1"

@@ -8,12 +8,14 @@ terraform {
 }
 
 provider aws {
-  region = "us-west-2"
+  profile = "home"
+  region  = "us-west-2"
 }
 
 provider aws {
-  alias  = "us_east_1"
-  region = "us-east-1"
+  alias   = "us_east_1"
+  profile = "home"
+  region  = "us-east-1"
 }
 
 module tf_state {

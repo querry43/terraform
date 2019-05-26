@@ -59,7 +59,7 @@
     {
       "type": "shell",
       "inline": [
-        "curl https://releases.hashicorp.com/terraform/0.12.0-alpha4/terraform_0.12.0-alpha4_terraform_0.12.0-alpha4_linux_amd64.zip > /tmp/terraform.zip",
+        "curl https://releases.hashicorp.com/terraform/0.12.0/terraform_0.12.0_linux_amd64.zip > /tmp/terraform.zip",
         "sudo unzip -d /usr/local/bin /tmp/terraform.zip"
       ]
     },
@@ -73,7 +73,7 @@
       "type": "shell",
       "inline": [
         "sudo su - -c 'cd ~matt && git clone https://github.com/querry43/dotfiles.git && cd dotfiles && curate' matt",
-        "sudo su - -c 'curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash' matt",
+        "sudo su - -c 'curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash' matt",
         "sudo su - -c 'mkdir work' matt"
       ]
     }

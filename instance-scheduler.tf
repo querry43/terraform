@@ -15,25 +15,27 @@ data aws_dynamodb_table instance_scheduler {
 resource aws_dynamodb_table_item instance_scheduler_daytime_period {
   table_name = data.aws_dynamodb_table.instance_scheduler.name
   hash_key   = data.aws_dynamodb_table.instance_scheduler.hash_key
+  range_key  = data.aws_dynamodb_table.instance_scheduler.range_key
 
   item = jsonencode({
-    begintime   = { S = "09:00" }
-    description = { S = "Daytime hours" }
-    endtime     = { S = "23:00" }
-    name        = { S = "daytime" }
     type        = { S = "period" }
+    name        = { S = "daytime" }
+    description = { S = "Daytime hours" }
+    begintime   = { S = "09:00" }
+    endtime     = { S = "23:00" }
   })
 }
 
 resource aws_dynamodb_table_item instance_scheduler_daytime_schedule {
   table_name = data.aws_dynamodb_table.instance_scheduler.name
   hash_key   = data.aws_dynamodb_table.instance_scheduler.hash_key
+  range_key  = data.aws_dynamodb_table.instance_scheduler.range_key
 
   item = jsonencode({
-    description = { S = "Daytime hours" }
+    type        = { S = "schedule" }
     name        = { S = "daytime" }
+    description = { S = "Daytime hours" }
     periods     = { SS = [ "daytime" ] }
     timezone    = { S = "America/Los_Angeles" }
-    type        = { S = "schedule" }
   })
 }

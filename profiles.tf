@@ -1,10 +1,10 @@
 data aws_iam_policy_document administrator_role {
   statement {
-    actions = [ "sts:AssumeRole" ]
+    actions = ["sts:AssumeRole"]
 
     principals {
       type        = "Service"
-      identifiers = [ "ec2.amazonaws.com" ]
+      identifiers = ["ec2.amazonaws.com"]
     }
   }
 }

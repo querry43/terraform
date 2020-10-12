@@ -5,7 +5,7 @@ module www_underdogma_net {
   zone    = aws_route53_zone.zone
 
   providers = {
-    aws.us_east_1 = "aws.us_east_1"
+    aws.us_east_1 = aws.us_east_1
   }
 }
 
@@ -15,6 +15,6 @@ module test_underdogma_net {
   zone   = aws_route53_zone.zone
 
   providers = {
-    aws.us_east_1 = "aws.us_east_1"
+    aws.us_east_1 = aws.us_east_1
   }
 }

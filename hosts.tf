@@ -2,7 +2,7 @@ variable v1_availability_zone {
   default = "us-west-2b"
 }
 
-data "aws_ami" "ubuntu" {
+data aws_ami ubuntu {
   most_recent = true
 
   filter {
@@ -12,7 +12,7 @@ data "aws_ami" "ubuntu" {
   owners = ["241824369797"]
 }
 
-resource "aws_security_group" "v1" {
+resource aws_security_group v1 {
   name   = "v1"
   vpc_id = aws_vpc.main.id
 
@@ -33,12 +33,13 @@ resource "aws_security_group" "v1" {
   }
 }
 
-resource "aws_eip" "v1" {
-  instance = aws_instance.v1.id
-  vpc      = true
-}
+// temporarily disabled
+// resource aws_eip v1 {
+//   instance = aws_instance.v1.id
+//   vpc      = true
+// }
 
-resource "aws_ebs_volume" "v1" {
+resource aws_ebs_volume v1 {
   type              = "gp2"
   availability_zone = var.v1_availability_zone
   size              = 10
@@ -48,7 +49,7 @@ resource "aws_ebs_volume" "v1" {
   }
 }
 
-resource "aws_instance" "v1" {
+resource aws_instance v1 {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
 
@@ -65,10 +66,11 @@ resource "aws_instance" "v1" {
     volume_size = 20
   }
 
-  tags = {
-    Name     = "v1.underdogma.net"
-    Schedule = "daytime"
-  }
+  // temporarily disabled
+  // tags = {
+  //   Name     = "v1.underdogma.net"
+  //   Schedule = "daytime"
+  // }
 
   user_data = <<EOF
 #cloud-config
@@ -91,36 +93,37 @@ mounts:
 EOF
 }
 
-resource "aws_volume_attachment" "v1_work" {
+resource aws_volume_attachment v1_work {
   device_name = "/dev/sdf"
   volume_id   = aws_ebs_volume.v1.id
   instance_id = aws_instance.v1.id
 }
 
-module host_dns_records {
-  source  = "git@github.com:querry43/terraform-aws-route53-records.git"
-  zone    = aws_route53_zone.zone
-
-  recordsets = [
-    {
-      name = "v1"
-      type = "A"
-      ttl  = 30
-      records = [ aws_eip.v1.public_ip ]
-    },
-    {
-      name = "v1"
-      type = "AAAA"
-      ttl  = 30
-      records = aws_instance.v1.ipv6_addresses
-    },
-    {
-      name = "v8"
-      type = "A"
-      ttl  = 300
-      records = [
-        "64.193.62.63"
-      ]
-    }
-  ]
-}
+// temporarily disabled
+// module host_dns_records {
+//   source  = "git@github.com:querry43/terraform-aws-route53-records.git"
+//   zone    = aws_route53_zone.zone
+//
+//   recordsets = [
+//     {
+//       name = "v1"
+//       type = "A"
+//       ttl  = 30
+//       records = [ aws_eip.v1.public_ip ]
+//     },
+//     {
+//       name = "v1"
+//       type = "AAAA"
+//       ttl  = 30
+//       records = aws_instance.v1.ipv6_addresses
+//     },
+//     {
+//       name = "v8"
+//       type = "A"
+//       ttl  = 300
+//       records = [
+//         "64.193.62.63"
+//       ]
+//     }
+//   ]
+// }

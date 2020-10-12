@@ -9,8 +9,8 @@ resource aws_subnet dmz {
   cidr_block      = cidrsubnet(aws_vpc.main.cidr_block, 8, 0)
   ipv6_cidr_block = cidrsubnet(aws_vpc.main.ipv6_cidr_block, 8, 1)
 
-  map_public_ip_on_launch          = true
-  assign_ipv6_address_on_creation  = true
+  map_public_ip_on_launch         = true
+  assign_ipv6_address_on_creation = true
 }
 
 resource aws_internet_gateway main {
@@ -26,8 +26,8 @@ resource aws_route_table dmz {
   }
 
   route {
-    ipv6_cidr_block  = "::/0"
-    gateway_id       = aws_internet_gateway.main.id
+    ipv6_cidr_block = "::/0"
+    gateway_id      = aws_internet_gateway.main.id
   }
 }
 
@@ -38,4 +38,4 @@ resource aws_route_table_association dmz {
 
 resource aws_default_security_group default {
   vpc_id = aws_vpc.main.id
-}    
+}

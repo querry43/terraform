@@ -3,8 +3,8 @@ resource aws_route53_zone zone {
 }
 
 module support_dns_records {
-  source  = "git@github.com:querry43/terraform-aws-route53-records.git"
-  zone    = aws_route53_zone.zone
+  source = "git@github.com:querry43/terraform-aws-route53-records.git"
+  zone   = aws_route53_zone.zone
 
   recordsets = [
     {

@@ -35,7 +35,7 @@ resource aws_dynamodb_table_item instance_scheduler_daytime_schedule {
     type        = { S = "schedule" }
     name        = { S = "daytime" }
     description = { S = "Daytime hours" }
-    periods     = { SS = [ "daytime" ] }
+    periods     = { SS = ["daytime"] }
     timezone    = { S = "America/Los_Angeles" }
   })
 }

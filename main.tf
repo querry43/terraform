@@ -7,13 +7,11 @@ terraform {
 }
 
 provider aws {
-  profile = "home"
   region  = "us-west-2"
 }
 
 provider aws {
   alias   = "us_east_1"
-  profile = "home"
   region  = "us-east-1"
 }
 

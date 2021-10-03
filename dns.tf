@@ -52,6 +52,22 @@ module support_dns_records {
         "30 aspmx4.googlemail.com.",
         "30 aspmx5.googlemail.com.",
       ]
+    },
+    {
+      name = "automation"
+      type = "A"
+      ttl  = 300
+      records = [
+        "10.0.0.176",
+      ]
+    },
+    {
+      name = "hubitat"
+      type = "A"
+      ttl  = 300
+      records = [
+        "10.0.0.177",
+      ]
     }
   ]
 }

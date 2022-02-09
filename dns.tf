@@ -12,37 +12,39 @@ locals {
       ]
     },
     {
-      name = "googleffffffffe7d6dd88"
-      type = "CNAME"
-      records = [
-        "google.com."
-      ]
-    },
-    {
       name = ""
       type = "TXT"
       records = [
-        "google-site-verification=rfBuTw5s6j6a8pA9v9iM8Q_5PavyEJAtW83BD_k8g2o"
+        "v=spf1 include:spf.messagingengine.com ?all"
       ]
     },
     {
-      name = "google._domainkey"
-      type = "TXT"
+      name = "fm1._domainkey"
+      type = "CNAME"
       records = [
-        "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCB79R0AO54CzSl3+kPHrs8M3zyl3eRwg0ZWWew31MnCEl69YQ7vJpSBCbckZ4sUzLzYcUh+Uh2iMs+G2V/efdnAcX6/2tSuKMlsHQFybiKs+CebqKNjavEpTuqqyWJ2HZciJNAZxG5HCCg973MR5Po85uR6ymrQLDu9FhKn5evBQIDAQAB"
+        "fm1.underdogma.net.dkim.fmhosted.com"
+      ]
+    },
+    {
+      name = "fm2._domainkey"
+      type = "CNAME"
+      records = [
+        "fm2.underdogma.net.dkim.fmhosted.com"
+      ]
+    },
+    {
+      name = "fm3._domainkey"
+      type = "CNAME"
+      records = [
+        "fm3.underdogma.net.dkim.fmhosted.com"
       ]
     },
     {
       name = ""
       type = "MX"
       records = [
-        "10 aspmx.l.google.com.",
-        "20 alt1.aspmx.l.google.com.",
-        "20 alt2.aspmx.l.google.com.",
-        "30 aspmx2.googlemail.com.",
-        "30 aspmx3.googlemail.com.",
-        "30 aspmx4.googlemail.com.",
-        "30 aspmx5.googlemail.com.",
+        "10 in1-smtp.messagingengine.com",
+        "20 in2-smtp.messagingengine.com",
       ]
     },
     {
